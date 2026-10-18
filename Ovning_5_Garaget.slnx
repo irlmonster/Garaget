@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Ovning_5_Garaget.Tests/Ovning_5_Garaget.Tests.csproj" />
+  <Project Path="Ovning_5_Garaget/Ovning_5_Garaget.csproj" />
+</Solution>
