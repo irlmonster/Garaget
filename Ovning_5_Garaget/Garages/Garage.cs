@@ -2,11 +2,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Ovning_5_Garaget.Garages
 {
-    public class Garage<T> : IEnumerable<T> where T : IVehicle
+    public class Garage<T> where T : IVehicle
     {
         private readonly T?[] _vehicles;
 
@@ -27,7 +28,16 @@ namespace Ovning_5_Garaget.Garages
         public bool Park(T vehicle)
         {
             if (IsFull) return false;
-            if (this.Any(v => v.RegNumber == vehicle.RegNumber)) return false;
+
+            for (int i = 0; i < _vehicles.Length; i++)
+            {
+                if (_vehicles[i] is not null &&
+                    _vehicles[i]!.RegNumber.Equals(vehicle.RegNumber, StringComparison.OrdinalIgnoreCase))
+                {
+                    return false;
+                }
+            }
+
 
             for (int i = 0; i < _vehicles.Length; i++)
             {
@@ -58,16 +68,8 @@ namespace Ovning_5_Garaget.Garages
         }
 
 
-        public IEnumerator<T> GetEnumerator()
-        {
-            foreach (var vehicle in _vehicles)
-            {
-                if (vehicle is not null)
-                    yield return vehicle;
-            }
-        }
 
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    
 
     }
 }

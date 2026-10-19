@@ -10,13 +10,10 @@ namespace Ovning_5_Garaget
         {
             var garage = new Garage<IVehicle>(10);
 
-            garage.Park(new Car("ABC123", "Röd", 4, "Bensin"));
-            garage.Park(new Bus("BUS001", "Gul", 6, 50));
+            garage.Park(new Car("ABC123", "Röd", 4, "Volvo", "Bensin", CarType.Kombi));
+            garage.Park(new Bus("BUS001", "Gul", 6, "Scania", 50));
 
-            foreach (var v in garage)
-            {
-                Console.WriteLine(v);
-            }
+
 
             Console.WriteLine($"{garage.Count}/{garage.Capacity} platser.");
         }

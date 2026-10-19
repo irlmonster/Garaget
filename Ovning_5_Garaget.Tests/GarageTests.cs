@@ -51,7 +51,7 @@ namespace Ovning_5_Garaget.Tests
 
             Assert.True(result);
             Assert.Equal(0, garage.Count);
-            Assert.Empty(garage);
+
         }
 
         [Fact]
