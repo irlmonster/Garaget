@@ -36,6 +36,57 @@ namespace Ovning_5_Garaget.Handlers
            return _garage.FindByRegNumber(regNumber); // anropar metoden i garaget och returnerar svaret
         }
 
+
+        public int Count => _garage.Count; // returnerar antalet, vi ropar på och returnerar direkt garagets count-property
+
+        public int Capacity => _garage.Capacity; // returnerar totala storleken, vi ropar på och returnerar direkt garagets capacity-property
+
+
+        // skriv ut hur många av varje typ
+        public int CountByType(string typeName)
+        {
+            int count = 0;
+
+            foreach (var vehicle in GetAllVehicles())
+            {
+                if (vehicle.GetType().Name == typeName)
+                {
+                    count++;
+                }
+                
+            }
+
+            return count;
+        }
+
+
+        // Sök på färg
+        public IVehicle[] SearchByColor(string color)
+        {
+            // Loop 1: räkna träffar för att bestämma storleken på arrayen
+            int count = 0;
+            foreach (var vehicle in GetAllVehicles())
+            {
+                if (vehicle.Color.Equals(color, StringComparison.OrdinalIgnoreCase))
+                    count++;
+            }
+
+            // Loop 2: fyll arrayen 
+            var result = new IVehicle[count];
+            int index = 0;
+            foreach (var vehicle in GetAllVehicles())
+            {
+                if (vehicle.Color.Equals(color, StringComparison.OrdinalIgnoreCase))
+                {
+                    result[index] = vehicle;
+                    index++;
+                }
+            }
+
+            return result;
+        }
+
+
     }
 }
 

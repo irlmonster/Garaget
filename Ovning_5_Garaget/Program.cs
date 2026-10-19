@@ -1,5 +1,4 @@
-﻿using Ovning_5_Garaget.Garages;
-using Ovning_5_Garaget.Handlers;
+﻿using Ovning_5_Garaget.Handlers;
 using Ovning_5_Garaget.Vehicles;
 
 
@@ -17,16 +16,31 @@ namespace Ovning_5_Garaget
             handler.Park(new Bus("BSS001", "Blå", 10, "Volvo", 50));
             handler.Park(new Car("ATR123", "Vit", 4, "Tesla", "El", CarType.Suv));
             handler.Park(new Bus("BUS221", "Orange", 6, "KIA", 50));
-            handler.Park(new Car("PPC123", "Grå", 4, "SAAB", "Diesel", CarType.Cab));
+            handler.Park(new Car("PPC123", "Röd", 4, "SAAB", "Diesel", CarType.Cab));
             handler.Park(new Car("WKA727", "Svart", 4, "Volvo", "Bensin", CarType.Sedan));
+
+            Console.WriteLine("Metod för att räkna på typ: ");
+            Console.WriteLine($"Bilar: {handler.CountByType("Car")}");
+            Console.WriteLine($"Bussar: {handler.CountByType("Bus")}");
 
 
             // skriv ut alla fordon
+            Console.WriteLine("");
+            Console.WriteLine("Alla fordon: ");
             foreach (var vehicle in handler.GetAllVehicles())
+            {
+                Console.WriteLine("Fordon: " + vehicle);
+            }
+            Console.WriteLine("");
+
+
+
+            Console.WriteLine("Sökning på Röd: ");
+            foreach (var vehicle in handler.SearchByColor("Röd"))
             {
                 Console.WriteLine(vehicle);
             }
-
+                Console.WriteLine("");
 
             Console.Write("Sök regnummer: ");
             string input = Console.ReadLine() ?? "";
