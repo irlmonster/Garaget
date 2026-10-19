@@ -1,13 +1,12 @@
 ﻿using Ovning_5_Garaget.Garages;
 using Ovning_5_Garaget.Vehicles;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Ovning_5_Garaget.Tests
 {
     public class GarageTests
     {
         [Fact]
-        public void Park_WhenSpaceAvialable_ReturnsTrue()
+        public void Park_WhenSpaceAvailable_ReturnsTrue()
         {
             var garage = new Garage<IVehicle>(2);
 
@@ -38,6 +37,9 @@ namespace Ovning_5_Garaget.Tests
 
             var result = garage.Park(new Bus("abc123", "Gul", 6, "Scania", 50));
 
+
+            Assert.False(result);
+            Assert.Equal(1, garage.Count);
         }
 
 

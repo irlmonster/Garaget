@@ -1,9 +1,4 @@
 ﻿using Ovning_5_Garaget.Vehicles;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace Ovning_5_Garaget.Garages
 {

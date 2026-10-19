@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-
-namespace Ovning_5_Garaget.Vehicles
+﻿namespace Ovning_5_Garaget.Vehicles
 {
     public class Car : Vehicle
     {

@@ -1,9 +1,4 @@
-﻿using Microsoft.VisualBasic.FileIO;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Ovning_5_Garaget.Vehicles
+﻿namespace Ovning_5_Garaget.Vehicles
 {
     public class Motorcycle : Vehicle
     {
