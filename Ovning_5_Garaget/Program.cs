@@ -1,4 +1,5 @@
 ﻿using Ovning_5_Garaget.Garages;
+using Ovning_5_Garaget.Handlers;
 using Ovning_5_Garaget.Vehicles;
 
 
@@ -8,14 +9,26 @@ namespace Ovning_5_Garaget
     {
         static void Main(string[] args)
         {
-            var garage = new Garage<IVehicle>(10);
+            var handler = new GarageHandler(10);
 
-            garage.Park(new Car("ABC123", "Röd", 4, "Volvo", "Bensin", CarType.Kombi));
-            garage.Park(new Bus("BUS001", "Gul", 6, "Scania", 50));
+            handler.Park(new Car("ABC123", "Röd", 4, "Volvo", "Bensin", CarType.Kombi));
+            handler.Park(new Bus("BUS001", "Gul", 6, "Scania", 50));
+            handler.Park(new Car("ABC321", "Lila", 4, "Ford", "Bensin", CarType.Sedan));
+            handler.Park(new Bus("BSS001", "Blå", 10, "Volvo", 50));
+            handler.Park(new Car("ATR123", "Vit", 4, "Tesla", "El", CarType.Suv));
+            handler.Park(new Bus("BUS221", "Orange", 6, "KIA", 50));
+            handler.Park(new Car("PPC123", "Grå", 4, "SAAB", "Diesel", CarType.Cab));
+            handler.Park(new Car("WKA727", "Svart", 4, "Volvo", "Bensin", CarType.Sedan));
 
 
 
-            Console.WriteLine($"{garage.Count}/{garage.Capacity} platser.");
+            foreach (var vehicle in handler.GetAllVehicles())
+            {
+                Console.WriteLine(vehicle);
+            }
+
+
+
         }
     }
 }

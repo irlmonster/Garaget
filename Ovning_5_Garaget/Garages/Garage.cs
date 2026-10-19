@@ -62,7 +62,26 @@ namespace Ovning_5_Garaget.Garages
             return false;
         }
 
+        public T[] GetVehicles()
+        {
+            // Ny array med storleken av Count
+            var result = new T[Count];
 
+            //Egen räknade för var i nya arrayen nästa fordon ska hamna
+            int index = 0;
+
+            //Gå igenom alla platser i garaet
+            for (int i = 0; i < _vehicles.Length; i++)
+            {
+                if (_vehicles[i] is not null)
+                {
+                    // lägg till fordonet (! säger att vi vet att det inte är null eftersom vi kolla det i if-satsen)
+                    result[index] = _vehicles[i]!;
+                    index++;
+                }
+            }
+            return result;
+        }
 
     
 
