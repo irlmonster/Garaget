@@ -83,7 +83,20 @@ namespace Ovning_5_Garaget.Garages
             return result;
         }
 
-    
+        public T? FindByRegNumber(string regNumber)
+        {
+            for (int i = 0; i < _vehicles.Length; i++)
+            {
+                if (_vehicles[i] is not null &&
+                    _vehicles[i]!.RegNumber.Equals(regNumber, StringComparison.OrdinalIgnoreCase))
+                {
+                    return _vehicles[i];
+                }
+            }
+            return default;
+        }
+
+
 
     }
 }

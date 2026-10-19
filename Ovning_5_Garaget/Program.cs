@@ -21,14 +21,26 @@ namespace Ovning_5_Garaget
             handler.Park(new Car("WKA727", "Svart", 4, "Volvo", "Bensin", CarType.Sedan));
 
 
-
+            // skriv ut alla fordon
             foreach (var vehicle in handler.GetAllVehicles())
             {
                 Console.WriteLine(vehicle);
             }
 
 
+            Console.Write("Sök regnummer: ");
+            string input = Console.ReadLine() ?? "";
 
+            var found = handler.FindByRegNumber(input);
+
+            if (found is null)
+            {
+                Console.WriteLine("Inget fordon hittades.");
+            }
+            else
+            {
+                Console.WriteLine(found);
+            }
         }
     }
 }

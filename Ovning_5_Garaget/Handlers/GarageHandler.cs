@@ -30,6 +30,12 @@ namespace Ovning_5_Garaget.Handlers
 
             return _garage.GetVehicles(); // returnerar en array från garagets metod (som i sig är en kopia av den riktiga arrayen)
         }
+
+        public IVehicle? FindByRegNumber(string regNumber)
+        {
+           return _garage.FindByRegNumber(regNumber); // anropar metoden i garaget och returnerar svaret
+        }
+
     }
 }
 
