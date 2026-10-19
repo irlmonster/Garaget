@@ -18,7 +18,7 @@ En konsollapplikation i C# som simulerar ett parkeringsgarage. Projektet byggs m
 - **xUnit** för enhetstester
 - `Garage<T>` är en generisk klass begränsad till `IVehicle`
 - Fordonen lagras i en array (inte `List<T>`), enligt uppgiftens krav
-- Garaget använder `IEnumerable<T>`, så det går att använda `foreach` och LINQ utan att den interna arrayen exponeras
+- Garaget använder inte `IEnumerable<T>` och LINQ längre, efter sen ändring av spelreglerna
 - Delade egenskaper ligger i den abstrakta basklassen `Vehicle`, varje fordonstyp har sina egna egenskaper
 - Fordonstyper som sport/touring och sedan/kombi är enums
 
