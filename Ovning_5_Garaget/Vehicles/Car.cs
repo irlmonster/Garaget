@@ -16,6 +16,6 @@ namespace Ovning_5_Garaget.Vehicles
             Type = type;
         }
 
-        public override string ToString() => $"{base.ToString()}, bränsle: {FuelType}";
+        public override string ToString() => $"{base.ToString()}, {Type}, bränsle: {FuelType}";
     }
 }

@@ -9,7 +9,7 @@ namespace Ovning_5_Garaget.Vehicles
         string RegNumber { get; }
         string Color { get; }
         int Wheels { get; }
-
+        string Brand { get; }
 
 
     }
