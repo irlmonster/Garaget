@@ -1,4 +1,5 @@
 ﻿using Ovning_5_Garaget.Handlers;
+using Ovning_5_Garaget.UI;
 using Ovning_5_Garaget.Vehicles;
 
 
@@ -8,63 +9,14 @@ namespace Ovning_5_Garaget
     {
         static void Main(string[] args)
         {
-            var handler = new GarageHandler(10);
 
-            handler.Park(new Car("ABC123", "Röd", 4, "Volvo", "Bensin", CarType.Kombi));
-            handler.Park(new Bus("BUS001", "Gul", 6, "Scania", 50));
-            handler.Park(new Car("ABC321", "Lila", 4, "Ford", "Bensin", CarType.Sedan));
-            handler.Park(new Bus("BSS001", "Blå", 10, "Volvo", 50));
-            handler.Park(new Car("ATR123", "Vit", 4, "Tesla", "El", CarType.Suv));
-            handler.Park(new Bus("BUS221", "Orange", 6, "KIA", 50));
-            handler.Park(new Car("PPC123", "Röd", 4, "SAAB", "Diesel", CarType.Cab));
-            handler.Park(new Car("WKA727", "Svart", 4, "Volvo", "Bensin", CarType.Sedan));
-
-            Console.WriteLine("Metod för att räkna på typ: ");
-            Console.WriteLine($"Bilar: {handler.CountByType("Car")}");
-            Console.WriteLine($"Bussar: {handler.CountByType("Bus")}");
-
-
-            // skriv ut alla fordon
-            Console.WriteLine("");
-            Console.WriteLine("Alla fordon: ");
-            foreach (var vehicle in handler.GetAllVehicles())
-            {
-                Console.WriteLine("Fordon: " + vehicle);
-            }
-            Console.WriteLine("");
+            //Skapa ett menyobjekt och sen kör vi metoden Run 
+            var menu = new MainMenu();
+            menu.Run();
+            
 
 
 
-            Console.WriteLine("Sökning på Röd: ");
-            foreach (var vehicle in handler.SearchByColor("Röd"))
-            {
-                Console.WriteLine(vehicle);
-            }
-                Console.WriteLine("");
-
-
-
-
-            Console.WriteLine("Sökning på hjul: ");
-            foreach (var vehicle in handler.SearchByWheels(4))
-            {
-                Console.WriteLine(vehicle);
-            }
-            Console.WriteLine("");
-
-            Console.Write("Sök regnummer: ");
-            string input = Console.ReadLine() ?? "";
-
-            var found = handler.FindByRegNumber(input);
-
-            if (found is null)
-            {
-                Console.WriteLine("Inget fordon hittades.");
-            }
-            else
-            {
-                Console.WriteLine(found);
-            }
         }
     }
 }
