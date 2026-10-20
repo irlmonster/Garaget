@@ -17,7 +17,7 @@
         }
 
         public override string ToString() =>
-    $"{GetType().Name} {RegNumber}, {Brand}, {Color}, {Wheels} hjul";
+        $"{GetType().Name} {RegNumber}, {Brand}, {Color}, {Wheels} hjul";
 
 
 

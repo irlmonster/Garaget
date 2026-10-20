@@ -42,6 +42,16 @@ namespace Ovning_5_Garaget
             }
                 Console.WriteLine("");
 
+
+
+
+            Console.WriteLine("Sökning på hjul: ");
+            foreach (var vehicle in handler.SearchByWheels(4))
+            {
+                Console.WriteLine(vehicle);
+            }
+            Console.WriteLine("");
+
             Console.Write("Sök regnummer: ");
             string input = Console.ReadLine() ?? "";
 

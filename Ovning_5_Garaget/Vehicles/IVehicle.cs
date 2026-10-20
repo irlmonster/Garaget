@@ -8,5 +8,9 @@
         string Brand { get; }
 
 
+
+
+
+
     }
 }

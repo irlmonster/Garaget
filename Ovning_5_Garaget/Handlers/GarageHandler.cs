@@ -87,6 +87,65 @@ namespace Ovning_5_Garaget.Handlers
         }
 
 
+
+        // Sök på hjul
+        public IVehicle[] SearchByWheels(int wheels)
+        {
+            // Loop 1: räkna träffar för att bestämma storleken på arrayen
+            int count = 0;
+            foreach (var vehicle in GetAllVehicles())
+            {
+                if (vehicle.Wheels == wheels)
+                {
+                    count++;
+                }
+                    
+            }
+
+            // Loop 2: fyll arrayen 
+            var result = new IVehicle[count];
+            int index = 0;
+            foreach (var vehicle in GetAllVehicles())
+            {
+                if (vehicle.Wheels == wheels)
+                {
+                    result[index] = vehicle;
+                    index++;
+                }
+            }
+
+            return result;
+        }
+
+        // sök på cylindervolym
+/*        public IVehicle[] SearchByCylinderVolume(int cylinderVolume)
+        {
+            // Loop 1: räkna träffar för att bestämma storleken på arrayen
+            int count = 0;
+            foreach (var vehicle in GetAllVehicles())
+            {
+                if (vehicle.Wheels == cylinderVolume)
+                {
+                    count++;
+                }
+
+            }
+
+            // Loop 2: fyll arrayen 
+            var result = new IVehicle[count];
+            int index = 0;
+            foreach (var vehicle in GetAllVehicles())
+            {
+                if (vehicle. == cylinderVolume)
+                {
+                    result[index] = vehicle;
+                    index++;
+                }
+            }
+
+            return result;
+        }*/
+
     }
 }
 
