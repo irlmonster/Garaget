@@ -10,7 +10,9 @@ namespace Ovning_5_Garaget.UI
         public MainMenu()
         {
             // Tillfälligt 10 platser, byts mot användarens input när input-hjälparen finns
-            _handler = new GarageHandler(10);
+            _handler = new GarageHandler(ConsoleInput.ReadInt("Hur många platser ska garaget ha? ", 1, 1000));
+
+
         }
 
         public void Run()
@@ -133,20 +135,157 @@ namespace Ovning_5_Garaget.UI
 
         private void ParkVehicle()
         {
+            ConsoleOutput.WriteHeader("Parkera fordon");
+
+            // Kolla först, så användaren inte fyller i allt i onödan
+            if (_handler.Count >= _handler.Capacity)
+            {
+                ConsoleOutput.WriteError("Garaget är fullt.");
+                return;
+            }
+
+            // Undermeny: välj fordonstyp
+            Console.WriteLine("1. Bil");
+            Console.WriteLine("2. Motorcykel");
+            Console.WriteLine("3. Buss");
+            Console.WriteLine("4. Båt");
+            Console.WriteLine("5. Flygplan");
+            int choice = ConsoleInput.ReadInt("Välj fordonstyp (1-5): ", 1, 5);
+            Console.WriteLine();
+
+            // Regnummer först, och stoppa direkt om det redan finns
+            string regNumber = ConsoleInput.ReadRegNumber("Regnummer: ");
+
+            if (_handler.FindByRegNumber(regNumber) is not null)
+            {
+                ConsoleOutput.WriteError($"Ett fordon med regnummer {regNumber} finns redan i garaget.");
+                return;
+            }
+
+            // Gemensamma egenskaper för alla fordon
+            string color = ConsoleInput.ReadString("Färg: ");
+            string brand = ConsoleInput.ReadString("Märke: ");
+            int wheels = ConsoleInput.ReadInt("Antal hjul: ", 0, 50);
+
+            // Typspecifika egenskaper, och skapa rätt sorts fordon.
+            // Switch expression: varje gren returnerar ett nytt fordon som hamnar i vehicle.
+            IVehicle vehicle = choice switch
+            {
+                1 => new Car(regNumber, color, wheels, brand,
+                        ConsoleInput.ReadString("Bränsle: "),
+                        ConsoleInput.ReadCarType("Välj biltyp: ")),
+
+                2 => new Motorcycle(regNumber, color, wheels, brand,
+                        ConsoleInput.ReadInt("Cylindervolym (cc): ", 50, 3000),
+                        ConsoleInput.ReadMotorcycleType("Välj motorcykeltyp: ")),
+
+                3 => new Bus(regNumber, color, wheels, brand,
+                        ConsoleInput.ReadInt("Antal säten: ", 1, 200)),
+
+                4 => new Boat(regNumber, color, wheels, brand,
+                        ConsoleInput.ReadDouble("Längd (meter): ", 1, 500)),
+
+                _ => new Airplane(regNumber, color, wheels, brand,
+                        ConsoleInput.ReadInt("Antal motorer: ", 1, 8))
+            };
+
+            if (_handler.Park(vehicle))
+            {
+                ConsoleOutput.WriteSuccess($"Fordonet parkerades: {vehicle}");
+            }
+            else
+            {
+                ConsoleOutput.WriteError("Fordonet kunde inte parkeras.");
+            }
         }
 
         private void RemoveVehicle()
         {
+            ConsoleOutput.WriteHeader("Hämta ut fordon");
+            string regNumber = ConsoleInput.ReadRegNumber("Ange regnummer: ");
+
+            // Hämta ut fordonet först sedan visa vad som togs ut
+            var vehicle = _handler.FindByRegNumber(regNumber);
+
+            if (vehicle is null)
+            {
+                ConsoleOutput.WriteError($"Inget fordon med regnummer {regNumber} finns i garaget.");
+                return;
+            }
+
+            _handler.Remove(regNumber);
+            ConsoleOutput.WriteSuccess($"Fordonet har hämtats ut: {vehicle}");
+
         }
 
         private void FindVehicle()
         {
             ConsoleOutput.WriteHeader("Leta efter fordon baserat på regnummer");
             string regNumber = ConsoleInput.ReadRegNumber("Ange regnummer: ");
+
+            var vehicle = _handler.FindByRegNumber(regNumber);
+
+            if (vehicle is null)
+            {
+                ConsoleOutput.WriteWarning($"Inget fordon med regnummer {regNumber} finns i garaget.");
+                return;
+            }
+
+            ConsoleOutput.WriteSuccess("Fordonet hittades: ");
+            Console.WriteLine(vehicle);
+
+
+
         }
 
+        // Låter användaren söka fordon, antingen med fritext eller på kombinerade egenskaper
         private void SearchVehicles()
         {
+            ConsoleOutput.WriteHeader("Sök fordon");
+
+            // Undermeny: välj söksätt
+            Console.WriteLine("1. Fritext (söker i alla egenskaper)");
+            Console.WriteLine("2. Egenskaper (kombinera en eller flera)");
+            int choice = ConsoleInput.ReadInt("Välj (1-2): ", 1, 2);
+            Console.WriteLine();
+
+            // Deklareras här utanför if-satsen, så båda grenarna kan fylla den
+            // och den finns kvar för utskriften längre ner
+            IVehicle[] result;
+
+            if (choice == 1)
+            {
+                // Fritext: varje fordon avgör själv via Matches om sökordet matchar
+                string term = ConsoleInput.ReadString("Sökord: ");
+                result = _handler.Search(term);
+            }
+            else
+            {
+                // Egenskaper: tomt svar blir null, och null betyder "bryr mig inte om den här"
+                // Namngivna argument gör det tydligt vilket värde som hör till vilken parameter
+                Console.WriteLine("Lämna tomt för att hoppa över en egenskap.");
+                result = _handler.SearchByProperties(
+                    color: ConsoleInput.ReadOptionalString("Färg: "),
+                    wheels: ConsoleInput.ReadOptionalInt("Antal hjul: ", 0, 50),
+                    brand: ConsoleInput.ReadOptionalString("Märke: "),
+                    type: ConsoleInput.ReadOptionalString("Typ (Car, Motorcycle, Bus, Boat, Airplane): "));
+            }
+
+            Console.WriteLine();
+
+            // Inga träffar: varna och gå ut
+            if (result.Length == 0)
+            {
+                ConsoleOutput.WriteWarning("Inga fordon matchade sökningen.");
+                return;
+            }
+
+            // Visa antal träffar och skriv ut varje fordon (använder fordonets ToString)
+            ConsoleOutput.WriteSuccess($"{result.Length} fordon hittades:");
+            foreach (var vehicle in result)
+            {
+                Console.WriteLine(vehicle);
+            }
         }
 
         private void PopulateGarage()
@@ -189,6 +328,13 @@ namespace Ovning_5_Garaget.UI
 
         private void CreateNewGarage()
         {
+            ConsoleOutput.WriteHeader("Skapa nytt garage");
+            ConsoleOutput.WriteWarning("Det nuvarande garaget och alla fordon i det försvinner.");
+
+            int capacity = ConsoleInput.ReadInt("Antal platser i nya garaget: ", 1, 1000);
+            _handler = new GarageHandler(capacity);
+
+            ConsoleOutput.WriteSuccess($"Nytt garage med {capacity} platser har skapats.");
         }
     }
 }
