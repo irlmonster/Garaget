@@ -1,4 +1,5 @@
-﻿namespace Ovning_5_Garaget.Vehicles
+﻿using Ovning_5_Garaget.Validation;
+namespace Ovning_5_Garaget.Vehicles
 {
     public abstract class Vehicle : IVehicle
     {
@@ -10,7 +11,14 @@
 
         protected Vehicle( string regNumber, string color, int wheels, string brand)
         {
-            RegNumber = regNumber.ToUpper();    // gör sökningen enklare senare
+            // Kallar på var validation för regnummer som vi byggt, kollar först så vi inte bygger ett halvt objekt i onödan
+            if (!RegNumberValidation.IsValid(regNumber))
+            {
+                throw new ArgumentException("Regnumret måste vara tre bokstäver, två siffror och en siffra eller bokstav", nameof(regNumber));
+            }
+
+
+            RegNumber = RegNumberValidation.Normalize(regNumber);    
             Color = color;
             Wheels = wheels;
             Brand = brand;
