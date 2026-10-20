@@ -4,7 +4,7 @@ namespace Ovning_5_Garaget.Tests
 {
     public class RegNumberValidationTests
     {
-        [Theory] // betyder att det ska köras flera gånger och dessa 4 rader under
+        [Theory] // betyder att det ska köras flera gånger och dessa rader under
         [InlineData("ABC123")]
         [InlineData("ABC12D")]
         [InlineData("abc123")]
