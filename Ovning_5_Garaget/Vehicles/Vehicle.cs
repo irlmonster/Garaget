@@ -24,6 +24,18 @@ namespace Ovning_5_Garaget.Vehicles
             Brand = brand;
         }
 
+        // Returnerar true om söktermen matchar något av fordonets grundfält. IgnoreCase hoppar stor/liten bokstac och ordinal hoppar språkregler
+        // virtual så att subklasser kan lägga till sina egna fält med override.
+        public virtual bool Matches(string searchTerm)
+        {
+            return RegNumber.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+                || Color.Equals(searchTerm, StringComparison.OrdinalIgnoreCase)
+                || Brand.Equals(searchTerm, StringComparison.OrdinalIgnoreCase)
+                || Wheels.ToString() == searchTerm;
+        }
+
+
+
         public override string ToString() =>
         $"{GetType().Name} {RegNumber}, {Brand}, {Color}, {Wheels} hjul";
 

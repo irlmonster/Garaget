@@ -10,6 +10,15 @@
             NumberOfEngines = numberOfEngines;
         }
 
+        // Kollar först basklassens fält (regnummer, färg, märke, hjul),
+        // sen flygplanets egna fält (antal motorer)
+        public override bool Matches(string searchTerm)
+        {
+            return base.Matches(searchTerm)
+                || NumberOfEngines.ToString() == searchTerm;                
+        }
+
+
         public override string ToString() => $"{base.ToString()}, antal motorer: {NumberOfEngines}";
 
 

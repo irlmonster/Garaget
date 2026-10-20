@@ -11,6 +11,16 @@
             Type = type;
         }
 
+        // Kollar först basklassens fält (regnummer, färg, märke, hjul),
+        // sen bilens egna fält (bränsle och typ)
+        public override bool Matches(string searchTerm)
+        {
+            return base.Matches(searchTerm)
+                || FuelType.ToString() == searchTerm
+                || Type.ToString().Equals(searchTerm, StringComparison.OrdinalIgnoreCase);
+        }
+
+
         public override string ToString() => $"{base.ToString()}, {Type}, bränsle: {FuelType}";
     }
 }

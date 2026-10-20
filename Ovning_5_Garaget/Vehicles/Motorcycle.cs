@@ -12,6 +12,17 @@
         }
 
 
+
+        // Kollar först basklassens fält (regnummer, färg, märke, hjul),
+        // sen motorcykelns egna fält (cylindervolym och typ)
+        public override bool Matches(string searchTerm)
+        {
+            return base.Matches(searchTerm)
+                || CylinderVolume.ToString() == searchTerm
+                || Type.ToString().Equals(searchTerm, StringComparison.OrdinalIgnoreCase);
+        }
+
+
         public override string ToString() =>
             $"{base.ToString()}, {Type}, {CylinderVolume} cc";
     }

@@ -7,8 +7,8 @@
         int Wheels { get; }
         string Brand { get; }
 
-
-
+        // en metod som måste implementeras
+        bool Matches(string searchTerm);
 
 
 
